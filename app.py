@@ -72,7 +72,7 @@ def converter(message: telebot.types.Message):
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду.\n{e}')
     else:
-        text = f'{amount} {quote} - {float(*total_base) * amount} {base} '
+        text = f'{amount} {quote} = {round(float(*total_base), 3) * amount} {base} '
         bot.send_message(message.chat.id, text)
 
 
