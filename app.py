@@ -17,7 +17,7 @@ def welcome_message(message):
 def values_message(message):
     bot.send_message(message.chat.id,
                      f'Чтобы воспользоваться ботом отправь сообщение вида: \n\n'
-                     f'<Имя валюты, цену которой хочешь узнать> <Имя валюты, в которой надо узнать цену первой валюты> <Количество первой валюты> \n\n'
+                     f'<Имя валюты, цену которой хочешь узнать> <Имя валюты, в которой надо узнать цену первой валюты> <Сумуу для перевода> \n\n'
                      f'Увидеть список всех доступных валют, введи команду /values')
 
 
@@ -25,8 +25,8 @@ def values_message(message):
 def values(message: telebot.types.Message):
     text = 'Доступные валюты:\n'
     for key in keys.keys():
-        text = "\n".join((text, key))
-    bot.send_message(message.chat.id, text)
+        text = "\n".join((text, key)) #получение названий валют
+    bot.send_message(message.chat.id, text) #вывод
 
 
 class ConvertionExeption(Exception):
@@ -36,29 +36,29 @@ class ConvertionExeption(Exception):
 @bot.message_handler(content_types=['text', ])
 def converter(message: telebot.types.Message):
     try:
-        values = message.text.split(' ')
+        values = message.text.split(' ') #проверка что введено три параметра
 
         if len(values) != 3:
             raise ConvertionExeption('Слишком много параметров.')
 
         quote, base, amount = values
-
         if quote == base:
             raise ConvertionExeption(
                 f'Невозможно перевести одинаковые валюты {base}')
 
         try:
-            quote_ticker = keys[quote]
+            quote_ticker = keys[quote.upper()] #RUB
+
         except KeyError:
             raise ConvertionExeption(f'Не удалось обработать валюту {quote}')
 
         try:
-            base_ticker = keys[base]
+            base_ticker = keys[base.upper()] #EUR
         except KeyError:
             raise ConvertionExeption(f'Не удалось обработать валюту {base}')
 
         try:
-            amount = float(amount)
+            amount = float(amount) #1000
         except ValueError:
             raise ConvertionExeption(
                 f'Не удалось обработать количество {amount}')
@@ -72,7 +72,7 @@ def converter(message: telebot.types.Message):
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду.\n{e}')
     else:
-        text = f'{amount} {quote} = {round(float(*total_base), 3) * amount} {base} '
+        text = f'{amount} {quote} = {round(float(*total_base), 3) * amount} {base} ' #вывод подсчётов
         bot.send_message(message.chat.id, text)
 
 
