@@ -26,11 +26,8 @@ def welcome_message(message):
 
 def request_forecast(message):
     """Function showing weather forecast for a day.
-
     :arg message: request from bot.
-
     :return: message with forecast data.
-
     """
     try:
         res = requests.get("http://api.openweathermap.org/data/2.5/forecast",
@@ -53,11 +50,8 @@ def request_forecast(message):
 
 def converter(message: telebot.types.Message):
     """Money exchange function.
-
     :arg message: request from bot.
-
     :return: message with amount exchanged.
-
     """
     try:
         values = message.text.split()  # проверка что введено три параметра
@@ -102,11 +96,8 @@ def converter(message: telebot.types.Message):
 
 def request_available_currency(message: telebot.types.Message):
     """Function showing list of available currency.
-
     :arg message: request from bot.
-
     :return: message list of currency.
-
     """
     bot.send_message(message.chat.id, f'Доступные валюты: \n' \
                                       f'USD = {get_exchange_rate("usd")} RUB \n' \
@@ -115,9 +106,7 @@ def request_available_currency(message: telebot.types.Message):
 
 def exchange_currency(message: telebot.types.Message):
     """Instruction of using exchange function.
-
     :arg message: request from bot.
-
     """
     bot.send_message(message.chat.id,
                      f'Чтобы воспользоваться обменником отправь сообщение вида: \n\n'

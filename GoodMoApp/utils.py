@@ -4,12 +4,9 @@ from config import bot
 
 def get_exchange_rate(src: str):
     """Getting an API of exchange rate
-
     :arg src: the currency from which to convert.
     :arg dest: the currency to convert to.
-
     :return: json file with data.
-
     """
     r = requests.get(f'https://www.cbr-xml-daily.ru/daily_json.js').json()
     src.lower()
@@ -23,11 +20,8 @@ def get_exchange_rate(src: str):
 
 def get_wind_direction(deg) -> object:
     """Wind direction data function.
-
     :arg deg: degree.
-
     :return: wind direction.
-
     """
     l = ['С ', 'СВ', ' В', 'ЮВ', 'Ю ', 'ЮЗ', ' З', 'СЗ']
     for i in range(0, 8):
